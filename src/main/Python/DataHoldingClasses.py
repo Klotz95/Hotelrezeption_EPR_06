@@ -6,6 +6,7 @@ __author__ = "6345060: Nico Kotlenga, 6293280: Umut Yilmaz"
 __copyright__ = "Copyright 2016 – EPR-Goethe-Uni"
 __email__ = "nico.kotlenga@stud.uni-frankfurt.de"
 
+from datetime import date
 
 class Person:
     """ This class represents a Person
@@ -349,3 +350,105 @@ class Booking:
 
         """
         return self.__curCustomer
+
+
+class Room:
+    """ This class represents a hotelroom. It's a data class with getter
+        and setter methods. It also has methods to check whether the room
+        is free for a specific timespan.
+    """
+
+    def __init__(self, roomNumber, pricePerDay, description, keys):
+        """ This mehtod initialize a room Object.
+            roomNumber: int
+            pricePerDay: Double
+            descritpion: String
+            keys: List<Key>
+        """
+        self.__roomNumber = roomNumber
+        self._pricePerDay = pricePerDay
+        self.__description = description
+        self.__keys = keys
+        self.__bookings = list()
+        self.__lastCleaned = date.today()
+        self.__problems = list()
+
+    def isFree(self, arrivalDate, depatureDate):
+        """ This method checks whether the room is free for this timespan.
+            arrivalDate: Date
+            depatureDate: Date
+            The return value is a boolean:
+            True: The room is free for the timespan
+            False: The room isn't free for the timespan
+        """
+        for curBooking in self.__bookings:
+            if(curBooking.getDateOfArrival() <= depatureDate or \
+             curBooking.getDateOfDepature >= arrivalDate):
+             return False
+
+        return True
+
+    def addBooking(self, newBooking):
+        """ This method will append a new booking to the bookings list
+            newBooking: Booking
+        """
+        self.__bookings.append(newBooking)
+
+    def removeBooking(self, selectedBooking):
+        """ This method will remove a selected booking from the booking list
+
+        """
+        self.__bookings.remove(selectedBooking)
+
+    def needACleanup(self):
+        """ This method returns a boolean value whether a cleanup is necesary
+            A cleanup is necesary after 48 hours or after a person has
+            checkout from a room
+        """
+        timedifference = date.today() - self.__lastCleaned
+        if(timedifference.days >= 2):
+            return True
+        # now check for a checkout
+
+        for curBooking in self.__bookings:
+            if(curBooking.getDateOfDepature() > self.__lastCleaned):
+                return True
+
+        return False
+
+    def setLastCleaned(self, cleaningDate):
+        """ This method sets the last cleaning date. It has no return value
+            cleaningDate: Date
+        """
+
+        self.__lastCleaned = cleaningDate
+    def getProblems(self):
+        """ This method will return the list of Problems
+
+        """
+        return self.__problems
+
+    def getBookings(self):
+        """ This method will return a list of all bookings
+
+        """
+        return self.__bookings
+
+    def addProblem(self, newProblem):
+        """ This method will apend a new Problem to the problem list
+            newProblem: Problem
+        """
+        self.__problems.append(newProblem)
+
+    def removeProblem(self, selectedProblem):
+        """ This mehtod will remove a problem from the given problem list
+
+        """
+        self.__problems.remove(selectedProblem)
+
+    def getKeys(self):
+        """ This mehtod will return a list with all room keys
+
+        """
+        return self.__keys
+    
