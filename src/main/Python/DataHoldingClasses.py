@@ -463,3 +463,105 @@ class Room:
 
         """
         return self.__roomNumber
+   
+
+
+""" TESTCASES
+
+///class Person
+
+#creating a Person object with firstname Max, lastname Mustermann and birthdate '01.01.1990'
+>>> Person('Max', 'Mustermann', '01.01.1990')
+<__main__.Person object at 0x03397BB0>
+
+#testing method getFirstname
+>>> Person.getFirstname
+<function Person.getFirstname at 0x033B4108>
+
+#testing method getBirthday
+>>> Person.getBirthday
+<function Person.getBirthday at 0x033B4030>
+
+#testing method getLastname
+>>> Person.getLastname
+<function Person.getLastname at 0x033B40C0>
+
+
+///class ReceptionEmployee
+
+#creating an RecetptionEmployee object
+>>> ReceptionEmployee('Max', 'Mustermann', '01.01.1990', '8', '2', '10.50')
+<__main__.ReceptionEmployee object at 0x03397A30>
+
+#testing method getBirthday
+>>> ReceptionEmployee.getBirthday
+<function Person.getBirthday at 0x033B4030>
+
+#testing method getFirstname
+>>> ReceptionEmployee.getFirstname
+<function Person.getFirstname at 0x033B4108>
+
+#testing method getLastname
+>>> ReceptionEmployee.getLastname
+<function Person.getLastname at 0x033B40C0>
+
+#testing method getMaxHoursofWork
+>>> ReceptionEmployee.getMaxHoursOfWork
+<function ReceptionEmployee.getMaxHoursOfWork at 0x03393198>
+
+#testing method getMinHoursOfWork
+>>> ReceptionEmployee.getMinHoursOfWork
+<function ReceptionEmployee.getMinHoursOfWork at 0x033931E0>
+
+#testing method getWagePerHour
+>>> ReceptionEmployee.getWagePerHour
+<function ReceptionEmployee.getWagePerHour at 0x03393DF8>
+
+
+
+///class Customer
+
+#creating a Customer object
+>>> Customer('Max', 'Mustermann', '01.01.1990')
+<__main__.Customer object at 0x03397D10>
+
+
+
+///class Key
+
+#creating a key object
+>>> Key(1)
+<__main__.Key object at 0x03396DF0>
+
+#testing method getKeyForRoom
+>>> Key.getKeyForRoom
+<function Key.getKeyForRoom at 0x03393F60>
+
+///class Problem
+
+#creating a Problem object
+>>> Problem('Broken window', 'Maxi', '10')
+<__main__.Problem object at 0x03397D10>
+
+#testing method getAssignedRoom
+>>> Problem.getAssignedRoom
+<function Problem.getAssignedRoom at 0x033BAC48>
+
+#testing method getDescription
+>>> Problem.getDescription
+<function Problem.getDescription at 0x033BA780>
+
+#testing method getProblemReporter
+>>> Problem.getProblemReporter
+<function Problem.getProblemReporter at 0x033BAC00>
+
+
+
+///class Transaction
+
+///class Workday
+
+///class Booking
+
+///class Room
+"""
