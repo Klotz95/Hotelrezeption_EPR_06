@@ -87,7 +87,7 @@ class Customer(Person):
     """
     customerIDCounter = 0
 
-    def __init__(self, fistname, lastname, birthday):
+    def __init__(self, firstname, lastname, birthday):
         """ This method initialize a customer object
             firstname: String
             lastname: String
@@ -97,9 +97,15 @@ class Customer(Person):
         Person.__init__(self,firstname , lastname, birthday)
         self.__bookings = list()
         self.__keys = list()
-        self.__customerID = customerIDCounter
-        Customer.customerIDCounter++
+        self.__customerID = Customer.customerIDCounter
+        Customer.customerIDCounter += 1
 
+    def getCustomerID(self):
+        """ This method will return the customer ID
+
+        """
+        return self.__customerID
+        
     def getBookings(self):
         """ This method will return a list of all bookings of this customer
 
@@ -243,7 +249,7 @@ class Workday:
         shift 3: 16:00 - 0:00
 
     """
-    def __init__(self, workshiftOne = list(), workshiftTwo = list(), workshiftThree = list(), dateOfDay):
+    def __init__(self,dateOfDay, workshiftOne = list(), workshiftTwo = list(), workshiftThree = list()):
         """ This method initialize a workday
             workshiftOne: List<ReceptionEmployee>
             workshiftTwo: List<ReceptionEmployee>
@@ -451,4 +457,3 @@ class Room:
 
         """
         return self.__keys
-    
