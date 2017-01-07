@@ -105,7 +105,7 @@ class Customer(Person):
 
         """
         return self.__customerID
-        
+
     def getBookings(self):
         """ This method will return a list of all bookings of this customer
 
@@ -457,3 +457,9 @@ class Room:
 
         """
         return self.__keys
+        
+    def getRoomNumber(self):
+        """ This method will return the room number
+
+        """
+        return self.__roomNumber

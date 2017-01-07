@@ -155,4 +155,86 @@ class BookingManager:
             if(curRoom.needACleanup()):
                 returnValue.append(curRoom)
 
-    
+class FinanceManager:
+    """ This class is a finance manager
+
+    """
+    def __init__(self):
+        """ This method initialize a finance manager object
+            It will get the manual transaction from the mySql Server.
+            Also all bookings and a list of all ReceptionEmployee will be get
+            from the server
+        """
+        try:
+            self.__curSqlManager = SqlConnector()
+            self.__transactions = self.__curSqlManager.getTransactions()
+            self.__receptionEmployee = self.__curSqlManager.getReceptionEmployee()
+            self.__bookings = self.__curSqlManager.getBookings()
+        except RuntimeError:
+            self.__transactions = list()
+            self.__receptionEmployee = list()
+            self.__bookings = list()
+
+    def addTransaction(self, newTransaction):
+        """ This method will add a transaction. If a database connection is
+            established the transaction will also be saved into the database
+            newTransaction: Transaction
+        """
+        self.__transactions.append(newTransaction)
+        self.__curSqlManager.addTransactionToDatabase(newTransaction)
+
+    def getBalanceFor(self, year, month):
+        """ This method will return a double value wich represents the balance
+            for a month and year
+            year:int
+            month: int
+        """
+
+        expenses = self.getExpensesFrom(year, month)
+        incomes = self.getIncomeFrom(year, month)
+
+        balance = 0
+
+        for curExpenseTransaction in expenses:
+            balance += curExpenseTransaction.getValue()
+
+        for curIncomeTransaction in incomes:
+            balance += curIncomeTransaction.getValue()
+
+        return balance
+
+
+    def getExpensesFrom(self, year, month):
+        """ This method will return a list of transaction with expenses
+
+        """
+        returnValue = list()
+
+        for curTransaction in self.__transactions:
+            if(curTransaction.getDateOfTransaction().year == year and \
+            curTransaction.getDateOfTransaction().month == month and \
+            curTransaction.getIsIncome() == False):
+                returnValue.append(curTransaction)
+
+        return returnValue
+
+    def getIncomeFrom(self, year, month):
+        """ This method will return a list of all transaction with income
+
+        """
+        returnValue = list()
+
+        # get the bookings for this month
+        for curBooking in self.__bookings:
+            if(curBooking.getDateOfArrival().year() == year and \
+                curBooking.getDateOfArrival().month == month):
+                newTransaction = Transaction("Rent of Room: " + \
+                str(curBooking.getRentedRoom().getRoomNumber()), \
+                curBooking.getPrice(), curBooking.getDateOfArrival())
+                returnValue.append(newTransaction)
+
+        for curTransaction in self.__transactions:
+            if(curTransaction.getDateOfTransaction().year == year and \
+            curTransaction.getDateOfTransaction().month == month and \
+            curTransaction.getIsIncome()):
+                returnValue.append(curTransaction)
